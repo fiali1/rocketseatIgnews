@@ -1,4 +1,5 @@
 import { signIn, useSession } from 'next-auth/client';
+import { useRouter } from 'next/router';
 import { getStripeJs } from '../../pages/api/stripe-js';
 import { api } from '../../services/api';
 import styles from './styles.module.scss';
@@ -9,10 +10,16 @@ interface SubscribeButtonProps {
 
 export default function SubscribeButton({ priceId }: SubscribeButtonProps) {
   const [ session ] = useSession();
+  const router = useRouter();
 
   async function handleSubscribe() {
     if (!session) {
       signIn('github');
+      return;
+    }
+
+    if (session.activeSubscription) {
+      router.push('/posts');
       return;
     }
 
@@ -21,8 +28,6 @@ export default function SubscribeButton({ priceId }: SubscribeButtonProps) {
       const { sessionId } = response.data;
 
       const stripe = await getStripeJs();
-
-      console.log("Dados", stripe, sessionId);
 
       await stripe.redirectToCheckout({ sessionId });
     } catch (error) {
