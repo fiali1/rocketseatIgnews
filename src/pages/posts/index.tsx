@@ -29,7 +29,7 @@ export default function Posts({ posts }: PostsProps) {
       <main className={styles.container}>
         <div className={styles.postList}>
           {posts.map(post => (
-            <Link key={post.slug} href={`${process.env.NEXTAUTH_URL}/posts/${post.slug}`}>
+            <Link key={post.slug} href={`/posts/${post.slug}`}>
               <a>
                 <time>
                   {post.updatedAt}
