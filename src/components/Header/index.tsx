@@ -2,12 +2,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ActiveLink } from '../ActiveLink';
-
-import SignInButton from '../SignInButton';
+import { SignInButton } from '../SignInButton';
 
 import styles from './styles.module.scss';
 
-export default function Header() {
+export function Header() {
 
   return(
     <header className={styles.headerContainer}>
